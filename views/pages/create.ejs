@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+    <%- include('../partials/loading'); %>
+
+    <%- include('../partials/navbar'); %>
+
+    <div class="form-container">
+        <form id="create-form">
+            <div class="section">
+                <div class="input">
+                    <label for="primary-contact">Primary Contact</label>
+                    <select id="primary-contact"></select>
+                </div>
+                <div class="input">
+                    <label for="start-date">Event Date:</label>
+                    <input type="date" name="start-date" id="start-date">
+                </div>
+                <div class="input">
+                    <label for="start-time">Start Time:</label>
+                    <input type="time" name="start-time" id="start-time">
+                </div>
+                <div class="input">
+                    <label for="end-time">End Time:</label>
+                    <input type="time" name="end-time" id="end-time">
+                </div>
+            </div>
+            <div class="section">
+                <p class="section-title">Rooms:</p>
+                <div id="room-inputs"></div>
+            </div>
+            <div class="button-container section">
+                <button class="btn" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+    <%- include('../partials/footer'); %>
+
+    <script src="/scripts/create.js"></script>
+</body>
+</html>

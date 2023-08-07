@@ -1,0 +1,48 @@
+<nav class="navBar">
+    <button class="openButton">
+        <i class="material-icons icon">menu</i>
+    </button>
+    <div class="navContainer closed">
+        <button class="closeButton">
+            <i class="material-icons icon">close</i>
+        </button>
+        <!-- <div class="image-container">
+            <img class="logo" src="../assets/exampleLogo.png" alt="Company Name">
+        </div> -->
+        <div class="welcome-message">
+            <p id="userWelcomeMsg"></p>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="/">Calendar</a></li>
+                <li><a href="/create">New Event</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+        <div class="footer">
+        </div>
+    </div>
+</nav>
+<script>
+
+    const userWelcomeMsg = document.getElementById('userWelcomeMsg');
+
+    const openButtonDOM = document.querySelector('.openButton');
+    const closeButtonDOM = document.querySelector('.closeButton');
+    const toggleColorSchemeBtn = document.querySelector('#toggle-color-scheme');
+
+    const navContainerDOM = document.querySelector('.navContainer');
+
+    const newEventBtn = document.querySelector('#new-event-btn');
+    const prayerWallBtn = document.querySelector('#prayer-wall-btn')
+
+    openButtonDOM.addEventListener('click', () => {
+        navContainerDOM.classList.toggle('open');
+        navContainerDOM.classList.toggle('closed');
+    })
+
+    closeButtonDOM.addEventListener('click', () => {
+        navContainerDOM.classList.toggle('open');
+        navContainerDOM.classList.toggle('closed');
+    })
+</script>
