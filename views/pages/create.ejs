@@ -17,15 +17,15 @@
                 </div>
                 <div class="input">
                     <label for="start-date">Event Date:</label>
-                    <input type="date" name="start-date" id="start-date">
+                    <input type="date" name="start-date" id="start-date" required>
                 </div>
                 <div class="input">
                     <label for="start-time">Start Time:</label>
-                    <input type="time" name="start-time" id="start-time">
+                    <input type="time" name="start-time" id="start-time" required>
                 </div>
                 <div class="input">
                     <label for="end-time">End Time:</label>
-                    <input type="time" name="end-time" id="end-time">
+                    <input type="time" name="end-time" id="end-time" required>
                 </div>
             </div>
             <div class="section">
@@ -35,6 +35,8 @@
             <div class="button-container section">
                 <button class="btn" type="submit">Submit</button>
             </div>
+
+            <p id="form-message"></p>
         </form>
     </div>
     

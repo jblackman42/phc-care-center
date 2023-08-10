@@ -75,6 +75,18 @@ const roomInputsContainerDOM = document.getElementById('room-inputs');
 
 const createFormDOM = document.getElementById('create-form');
 
+const formMessageDOM = document.getElementById('form-message');
+
+const showSuccessMsg = (msg) => {
+  formMessageDOM.classList.add('success');
+  formMessageDOM.classList.remove('error');
+  formMessageDOM.textContent = msg;
+}
+const showErrorMsg = (msg) => {
+  formMessageDOM.classList.remove('success');
+  formMessageDOM.classList.add('error');
+  formMessageDOM.textContent = msg;
+}
 // setup function
 (async () => {
   try {
@@ -83,8 +95,8 @@ const createFormDOM = document.getElementById('create-form');
 
     // if user is logged in and not in primary contacts group, add them manually
     // this only happens if the logged in user is an administrator
-    const primaryContactIDs = primaryContacts.map(contact => contact.User_ID);
-    if (!primaryContactIDs.includes(parseInt(user.userid))) primaryContacts.unshift({User_ID: parseInt(user.userid), Display_Name: user.display_name})
+    const primaryContactIDs = primaryContacts.map(contact => contact.Contact_ID);
+    if (!primaryContactIDs.includes(parseInt(user.ext_Contact_ID))) primaryContacts.unshift({Contact_ID: parseInt(user.ext_Contact_ID), Display_Name: user.display_name})
     
     primaryContactSelectDOM.innerHTML = primaryContacts.map(contact => {
       const { Contact_ID, Display_Name } = contact;
@@ -114,30 +126,50 @@ const createFormDOM = document.getElementById('create-form');
 createFormDOM.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const roomCheckboxInputsList = document.querySelectorAll('.room-checkbox');
-  const startTime = formatDate(`${startDateInputDOM.value}T${startTimeInputDOM.value}`);
-  const endTime = formatDate(`${startDateInputDOM.value}T${endTimeInputDOM.value}`);
+  try {
+    loading();
 
-  const eventData = {
-    ...eventDefaults, // fill in default into that won't change
-    Primary_Contact: primaryContactSelectDOM.value,
-    Event_Start_Date: startTime,
-    Event_End_Date: endTime,
-    Created_By_User: user.userid
-  }
-
-  const { Event_ID } = await createEvent(eventData);
-
-  const roomsToBook = [...roomCheckboxInputsList].filter(elem => elem.checked).map(elem => {
-    return {
-      Event_ID: Event_ID,
-      Room_ID: parseInt(elem.value)
+    const roomCheckboxInputsList = document.querySelectorAll('.room-checkbox');
+    const startTime = formatDate(`${startDateInputDOM.value}T${startTimeInputDOM.value}`);
+    const endTime = formatDate(`${startDateInputDOM.value}T${endTimeInputDOM.value}`);
+  
+    // turn user inputs into event
+    const eventData = {
+      ...eventDefaults, // fill in default into that won't change
+      Primary_Contact: primaryContactSelectDOM.value,
+      Event_Start_Date: startTime,
+      Event_End_Date: endTime,
+      Created_By_User: user.userid
     }
-  });
+  
+    // create event and get the event id
+    const { Event_ID } = await createEvent(eventData);
+  
+    // calculate which rooms to book from checkbox inputs
+    const roomsToBook = [...roomCheckboxInputsList].filter(elem => elem.checked).map(elem => {
+      return {
+        Event_ID: Event_ID,
+        Room_ID: parseInt(elem.value)
+      }
+    });
+  
+    // book rooms
+    await createRoomBookings(roomsToBook);
 
-  const roomBookings = await createRoomBookings(roomsToBook);
-
-  console.log(roomBookings)
+    // clear the form
+    primaryContactSelectDOM.value = null;
+    startDateInputDOM.value = null;
+    startTimeInputDOM.value = null;
+    endTimeInputDOM.value = null;
+    [...roomCheckboxInputsList].forEach(elem => elem.checked = false);
+    
+    showSuccessMsg('Meeting Created Successfully');
+    doneLoading();
+  } catch (error) {
+    doneLoading();
+    console.log(error)
+    showErrorMsg('something went wrong. Please try again later or Contact IT.')
+  }
 })
 
 // handle overlapped rooms
