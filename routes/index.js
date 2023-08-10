@@ -2,7 +2,7 @@ const express = require('express');
 const navigation = express.Router();
 
 //authentication middleware
-const { ensureAuthenticated, checkUserGroups } = require('../middleware/authorize.js')
+const { ensureAuthenticated, checkUserGroups, checkAdminUserGroups } = require('../middleware/authorize.js')
 
 //home page
 navigation.get('/', ensureAuthenticated, checkUserGroups, (req, res) => {
@@ -10,6 +10,9 @@ navigation.get('/', ensureAuthenticated, checkUserGroups, (req, res) => {
 })
 navigation.get('/create', ensureAuthenticated, checkUserGroups, (req, res) => {
   res.render('pages/create')
+})
+navigation.get('/new-user', ensureAuthenticated, checkAdminUserGroups, (req, res) => {
+  res.render('pages/new-user')
 })
 navigation.get('/login', (req, res) => {
   res.render('pages/login', {error: null})

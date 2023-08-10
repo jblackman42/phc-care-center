@@ -83,14 +83,6 @@ router.post('/login', async (req, res) => {
         } else {
             res.status(500).send({error: 'Something went wrong. Please try again later.'})
         }
-        // console.log(err)
-        // if (err.response && err.response.data.error_description) {
-        //     res.status(403).send({error: err.response.data.error_description}).end();
-        // } else if (err.response && err.response.data) {
-        //     res.status(403).send({error: err.response.data.error}).end();
-        // } else {
-        //     console.log(err)
-        //   }
     }
 })
 

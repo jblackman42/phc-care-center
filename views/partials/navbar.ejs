@@ -15,7 +15,8 @@
         <div class="links">
             <ul>
                 <li><a href="/">Calendar</a></li>
-                <li><a href="/create">New Event</a></li>
+                <li><a href="/create">New Meeting</a></li>
+                <li id="new-user-btn"><a href="/new-user">New User</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -33,8 +34,7 @@
 
     const navContainerDOM = document.querySelector('.navContainer');
 
-    const newEventBtn = document.querySelector('#new-event-btn');
-    const prayerWallBtn = document.querySelector('#prayer-wall-btn')
+    const newUserBtn = document.querySelector('#new-user-btn');
 
     openButtonDOM.addEventListener('click', () => {
         navContainerDOM.classList.toggle('open');
@@ -45,4 +45,20 @@
         navContainerDOM.classList.toggle('open');
         navContainerDOM.classList.toggle('closed');
     })
+
+    let user;
+    (async () => {
+        user = await axios({
+            method: 'get',
+            url: '/api/oauth/user'
+        }).then(response => response.data);
+
+    const { user_groups, roles } = user;
+    const authorized = user_groups.includes(68) || (roles && roles.includes('Administrators'));
+
+    if (authorized) {
+        newUserBtn.style.visibility = 'visible';
+        newUserBtn.style.display = 'block';
+    }
+})()
 </script>

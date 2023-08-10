@@ -935,7 +935,7 @@ nav .navContainer {
   border-right: 1px solid #bd93f9;
   position: fixed;
   height: 100%;
-  max-width: 16.25rem;
+  max-width: 18rem;
   top: 0;
   left: 0;
   z-index: 3;
@@ -1163,11 +1163,7 @@ nav .navContainer .links ul li {
   transition: transform 450ms ease;
   transform: translateX(-100%);
 }
-nav .navContainer .links ul li#new-event-btn {
-  display: none;
-  visibility: hidden;
-}
-nav .navContainer .links ul li#prayer-wall-btn {
+nav .navContainer .links ul li#new-user-btn {
   display: none;
   visibility: hidden;
 }
@@ -1783,11 +1779,17 @@ nav .navContainer .footer ul li a {
 .form-container form .input textarea {
   resize: none;
 }
+.form-container form .input button {
+  margin: auto 0 0 auto;
+}
 .form-container form #room-inputs {
   width: 100%;
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(3, 1fr);
+}
+.form-container form #room-inputs input[type=checkbox]:disabled + label {
+  text-decoration: line-through;
 }
 .form-container form #room-inputs .checkbox-input:nth-child(3n-2) {
   text-align: left;
@@ -1816,6 +1818,24 @@ nav .navContainer .footer ul li a {
   .form-container form #room-inputs .checkbox-input:nth-child(n) {
     text-align: left;
   }
+}
+.form-container form #form-message {
+  margin: 0.5rem;
+  text-align: center;
+  width: 100%;
+  font-size: 18px;
+  display: none;
+  visibility: hidden;
+}
+.form-container form #form-message.success {
+  color: #27ae60;
+  display: block;
+  visibility: visible;
+}
+.form-container form #form-message.error {
+  color: #c0392b;
+  display: block;
+  visibility: visible;
 }
 @media screen and (max-width: 768px) {
   .form-container form {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body>
+    <%- include('../partials/loading'); %>
+
+    <%- include('../partials/navbar'); %>
+
+    <div class="form-container">
+        <form id="new-user-form">
+            <div class="section">
+                <div class="input">
+                  <label for="first-name">First Name:</label>
+                  <input type="text" id="first-name" name="First_Name" required value="JD">
+                </div>
+                <div class="input">
+                  <label for="last-name">Last Name:</label>
+                  <input type="text" id="last-name" name="Last_Name" required value="Blackman">
+                </div>
+                <div class="input">
+                  <label for="email">Email Address:</label>
+                  <input type="email" id="email" name="Email" required value="JBlackman@pureheart.org">
+                </div>
+                <div class="input">
+                  <label for="phone">Phone Number:</label>
+                  <phone-number-input id="phone" name="Phone" required value="530-551-8112"></phone-number-input>
+                </div>
+                <div class="input">
+                  <label for="account-type">Account Type:</label>
+                  <select name="Account_Type" id="account-type">
+                    <option value="67">User</option>
+                    <option value="68">Administrator</option>
+                  </select>
+                </div>
+                <div class="button-container input">
+                    <button class="btn" type="submit">Submit</button>
+                </div>
+
+                <p id="form-message"></p>
+            </div>
+        </form>
+    </div>
+    
+    <%- include('../partials/footer'); %>
+
+    <script src="/scripts/newUser.js"></script>
+</body>
+</html>
