@@ -1,7 +1,7 @@
 // consts and funcs
 const eventDefaults = {
-  // Event_Title: "Care Center Meeting", // default title
-  Event_Title: "(TEST) Care Center Meeting", // default title
+  Event_Title: "Care Center Meeting", // default title
+  // Event_Title: "(TEST) Care Center Meeting", // default title
   Event_Type_ID: 11, // Meeting
   Congregation_ID: 13, // Counseling
   Location_ID: 8, // Care Center
