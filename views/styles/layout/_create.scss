@@ -1,205 +1,248 @@
 .form-container {
-    margin: 4rem auto;
-    color: $font-primary;
-    height: 100%;
+  margin: 4rem auto;
+  color: $font-primary;
+  height: 100%;
 
-    #warning-msg {
-        color: $error-red;
-        text-align: center;
-        font-weight: bold;
-    }
+  #warning-msg {
+    color: $error-red;
+    text-align: center;
+    font-weight: bold;
+  }
 
-    form {
-        max-width: 85vw;
+  form {
+    max-width: 85vw;
 
-        #room-selectors {
-            display: flex;
-            flex-wrap: wrap;
-            margin-block: 1rem;
-            gap: 1rem;
-            width: 100%;
+    #room-selectors {
+      display: flex;
+      flex-wrap: wrap;
+      margin-block: 1rem;
+      gap: 1rem;
+      width: 100%;
 
-            .building {
-                width: calc(50% - 1rem);
-                height: max-content;
-                border-radius: 2.5px;
-                position: relative;
-                padding: .5rem;
-                box-sizing: border-box;
+      .building {
+        width: calc(50% - 1rem);
+        height: max-content;
+        border-radius: 2.5px;
+        position: relative;
+        padding: .5rem;
+        box-sizing: border-box;
 
-                background-color: white;
+        background-color: white;
 
-                .building-header {
-                    display: flex;
-                    justify-content: space-between;
-                    cursor: pointer;
-                }
-
-                .building-name {
-                    // font-weight: bold;
-                    margin: 0;
-                    padding: 0;
-                    display: grid;
-                    place-items: center;
-                }
-
-                .toggle-btn {
-                    padding: .5rem;
-                    margin: 0;
-                    display: grid;
-                    place-items: center;
-                    border: none;
-                    background-color: transparent;
-                    color: $font-primary;
-                    cursor: pointer;
-                }
-
-                .room-accordion {
-                    list-style: none;
-                    margin: 0;
-                    margin-left: 1.5rem;
-                    padding: 0;
-                    overflow: hidden;
-                    max-height: 450px;
-                    transition: max-height 400ms ease-in-out;
-
-                    & ~ .building-header {
-                        background-color: red;
-                    }
-
-
-                    &.closed {
-                        max-height: 0 !important;
-                    }
-
-                    li {
-                        display: flex;
-                        height: max-content;
-                        align-items: flex-start;
-                        justify-content: flex-start;
-                        gap: .5rem;
-                    }
-                }
-            }
-
-            @media screen and (max-width: 768px) {
-                flex-direction: column;
-
-                .building {
-                    width: 100%;
-                }
-            }
-        }
-
-        .section {
-          width: 600px;
-          max-width: 85vw;
+        .building-header {
           display: flex;
-          flex-wrap: wrap;
-          gap: 1rem;
-
-          &:not(:first-of-type) {
-            margin-top: 1rem;
-          }
-          .section-title {
-            width: 100%;
-            margin: 0;
-          }
+          justify-content: space-between;
+          cursor: pointer;
         }
-        .input {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            width: calc(50% - .5rem);
-            // padding: 1rem .5rem;
-            box-sizing: border-box;
-            
-            &.full-width {
-              width: 100%;
-            }
 
-            label {
-              margin-bottom: .5rem;
-            }
-
-            input,
-            textarea,
-            select {
-              padding: .25rem .5rem;
-              height: 2rem;
-              line-height: 2rem;
-              border: none;
-              background-color: white;
-              color: $font-secondary;
-              border-radius: 2.5px;
-            }
-
-            select {
-              box-sizing: content-box;
-              -webkit-appearance: none;
-            }
-
-            textarea {
-              resize: none;
-            }
-
-            button {
-              margin: auto 0 0 auto;
-            }
-        }
-        #room-inputs {
-          width: 100%;
+        .building-name {
+          // font-weight: bold;
+          margin: 0;
+          padding: 0;
           display: grid;
-          gap: .5rem;
-          grid-template-columns: repeat(3, 1fr);
-
-          input[type="checkbox"]:disabled + label {
-            text-decoration: line-through;
-          }
-
-          .checkbox-input:nth-child(3n-2) {text-align: left;}
-          .checkbox-input:nth-child(3n-1) {text-align: center;}
-          .checkbox-input:nth-child(3n) {text-align: right;}
-
-          @media screen and (max-width: 550px) {
-            grid-template-columns: repeat(2, 1fr);
-            .checkbox-input:nth-child(2n-1) {text-align: left;}
-            .checkbox-input:nth-child(2n) {text-align: right;}
-          }
-          @media screen and (max-width: 375px) {
-            grid-template-columns: repeat(1, 1fr);
-            .checkbox-input:nth-child(n) {text-align: left;}
-          }
+          place-items: center;
         }
 
-        #form-message {
-          margin: .5rem;
-          text-align: center;
+        .toggle-btn {
+          padding: .5rem;
+          margin: 0;
+          display: grid;
+          place-items: center;
+          border: none;
+          background-color: transparent;
+          color: $font-primary;
+          cursor: pointer;
+        }
+
+        .room-accordion {
+          list-style: none;
+          margin: 0;
+          margin-left: 1.5rem;
+          padding: 0;
+          overflow: hidden;
+          max-height: 450px;
+          transition: max-height 400ms ease-in-out;
+
+          &~.building-header {
+            background-color: red;
+          }
+
+
+          &.closed {
+            max-height: 0 !important;
+          }
+
+          li {
+            display: flex;
+            height: max-content;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: .5rem;
+          }
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+
+        .building {
           width: 100%;
-          font-size: 18px;
-
-          display: none;
-          visibility: hidden;
-          &.success {
-            color: $success-green;
-            display: block;
-            visibility: visible;
-          }
-          &.error {
-            color: $error-red;
-            display: block;
-            visibility: visible;
-          }
         }
-
-        @media screen and (max-width: 768px) {
-            flex-direction: column;
-
-            .input {
-                width: 100%;
-                margin: 0;
-                padding: .5rem 0;
-            }
-        }
+      }
     }
+
+    .section {
+      width: 600px;
+      max-width: 85vw;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      &:not(:first-of-type) {
+        margin-top: 1rem;
+      }
+
+      .section-title {
+        width: 100%;
+        margin: 0;
+      }
+    }
+
+    .input {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      width: calc(50% - .5rem);
+      // padding: 1rem .5rem;
+      box-sizing: border-box;
+
+      &.full-width {
+        width: 100%;
+      }
+
+      label {
+        margin-bottom: .5rem;
+      }
+
+      input,
+      textarea,
+      select {
+        padding: .25rem .5rem;
+        height: 2rem;
+        line-height: 2rem;
+        border: none;
+        background-color: white;
+        color: $font-secondary;
+        border-radius: 2.5px;
+      }
+
+      select {
+        box-sizing: content-box;
+        -webkit-appearance: none;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      button {
+        margin: auto 0 0 auto;
+      }
+    }
+
+    #recurring-event-input {
+      background-color: white;
+      color: black;
+      border-radius: 2.5px;
+      // padding: 4px 8px;
+      padding: 0;
+      height: 2.5rem;
+      width: 100%;
+      border: none;
+      box-sizing: content-box;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      * {
+        margin: .5rem;
+      }
+    }
+
+    #room-inputs {
+      width: 100%;
+      display: grid;
+      gap: .5rem;
+      grid-template-columns: repeat(3, 1fr);
+
+      input[type="checkbox"]:disabled+label {
+        text-decoration: line-through;
+      }
+
+      .checkbox-input:nth-child(3n-2) {
+        text-align: left;
+      }
+
+      .checkbox-input:nth-child(3n-1) {
+        text-align: center;
+      }
+
+      .checkbox-input:nth-child(3n) {
+        text-align: right;
+      }
+
+      @media screen and (max-width: 550px) {
+        grid-template-columns: repeat(2, 1fr);
+
+        .checkbox-input:nth-child(2n-1) {
+          text-align: left;
+        }
+
+        .checkbox-input:nth-child(2n) {
+          text-align: right;
+        }
+      }
+
+      @media screen and (max-width: 375px) {
+        grid-template-columns: repeat(1, 1fr);
+
+        .checkbox-input:nth-child(n) {
+          text-align: left;
+        }
+      }
+    }
+
+    #form-message {
+      margin: .5rem;
+      text-align: center;
+      width: 100%;
+      font-size: 18px;
+
+      display: none;
+      visibility: hidden;
+
+      &.success {
+        color: $success-green;
+        display: block;
+        visibility: visible;
+      }
+
+      &.error {
+        color: $error-red;
+        display: block;
+        visibility: visible;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+
+      .input {
+        width: 100%;
+        margin: 0;
+        padding: .5rem 0;
+      }
+    }
+  }
 }

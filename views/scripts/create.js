@@ -72,6 +72,14 @@ const startDateInputDOM = document.getElementById('start-date');
 const startTimeInputDOM = document.getElementById('start-time');
 const endTimeInputDOM = document.getElementById('end-time')
 const roomInputsContainerDOM = document.getElementById('room-inputs');
+// recurring inputs
+const recurringCheckboxDOM = document.getElementById('recurring-checkbox');
+const recurringLabelDOM = document.querySelector('.recurring-label');
+
+const sequenceIntervalDOM = document.getElementById('sequenceInterval');
+const sequenceDayPositionDOM = document.getElementById('sequenceDayPosition');
+const sequenceWeekdaysDOM = document.getElementById('sequenceWeekdays');
+
 
 const createFormDOM = document.getElementById('create-form');
 
@@ -132,29 +140,45 @@ createFormDOM.addEventListener('submit', async (e) => {
     const roomCheckboxInputsList = document.querySelectorAll('.room-checkbox');
     const startTime = formatDate(`${startDateInputDOM.value}T${startTimeInputDOM.value}`);
     const endTime = formatDate(`${startDateInputDOM.value}T${endTimeInputDOM.value}`);
-  
-    // turn user inputs into event
-    const eventData = {
-      ...eventDefaults, // fill in default into that won't change
-      Primary_Contact: primaryContactSelectDOM.value,
-      Event_Start_Date: startTime,
-      Event_End_Date: endTime,
-      Created_By_User: user.userid
-    }
-  
-    // create event and get the event id
-    const { Event_ID } = await createEvent(eventData);
-  
-    // calculate which rooms to book from checkbox inputs
-    const roomsToBook = [...roomCheckboxInputsList].filter(elem => elem.checked).map(elem => {
-      return {
-        Event_ID: Event_ID,
-        Room_ID: parseInt(elem.value)
-      }
+    
+    // Calculate event duration in milliseconds
+    const eventDuration = new Date(endTime) - new Date(startTime);
+
+    // Handle single or recurring events based on pattern
+    const events = pattern.length > 0 ? 
+      // Create multiple events based on pattern
+      pattern.map(patternDate => ({
+        ...eventDefaults,
+        Primary_Contact: primaryContactSelectDOM.value,
+        Event_Start_Date: patternDate,
+        Event_End_Date: formatDate(new Date(new Date(patternDate).getTime() + eventDuration)),
+        Created_By_User: user.userid
+      })) :
+      // Create single event
+      [{
+        ...eventDefaults,
+        Primary_Contact: primaryContactSelectDOM.value,
+        Event_Start_Date: startTime,
+        Event_End_Date: endTime,
+        Created_By_User: user.userid
+      }];
+
+    // Create all events and collect their IDs
+    const createdEvents = await Promise.all(
+      events.map(event => createEvent(event))
+    );
+
+    // Create room bookings for each event
+    const roomBookingPromises = createdEvents.flatMap(({ Event_ID }) => {
+      return [...roomCheckboxInputsList]
+        .filter(elem => elem.checked)
+        .map(elem => ({
+          Event_ID: Event_ID,
+          Room_ID: parseInt(elem.value)
+        }));
     });
-  
-    // book rooms
-    await createRoomBookings(roomsToBook);
+
+    await createRoomBookings(roomBookingPromises);
 
     // clear the form
     primaryContactSelectDOM.value = null;

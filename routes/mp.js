@@ -234,6 +234,32 @@ router.get(
   }
 )
 
+
+router.post(
+  "/generate-sequence",
+  ensureAuthenticatedForAPI,
+  async (req, res) => {
+    const { sequence } = req.body;
+
+    if (!sequence)
+      return res.status(400).send({ err: "no sequence provided" }).end();
+
+    const pattern = await axios({
+      method: "post",
+      url: "https://my.pureheart.org/ministryplatformapi/tasks/generate-sequence",
+      data: sequence,
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${await getAccessToken()}`,
+      },
+    })
+      .then((response) => response.data)
+      .catch((err) => console.log(err));
+
+    res.send(pattern);
+  }
+)
+
 const MP = {
   matchOrCreateContact: async (First_Name, Last_Name, Email, Phone) => {
     return await axios({

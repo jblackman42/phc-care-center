@@ -1,47 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('../partials/head'); %>
 </head>
+
 <body>
     <%- include('../partials/loading'); %>
 
-    <%- include('../partials/navbar'); %>
+        <%- include('../partials/navbar'); %>
 
-    <div class="form-container">
-        <form id="create-form">
-            <div class="section">
-                <div class="input">
-                    <label for="primary-contact">Primary Contact</label>
-                    <select id="primary-contact"></select>
-                </div>
-                <div class="input">
-                    <label for="start-date">Event Date:</label>
-                    <input type="date" name="start-date" id="start-date" required>
-                </div>
-                <div class="input">
-                    <label for="start-time">Start Time:</label>
-                    <input type="time" name="start-time" id="start-time" required>
-                </div>
-                <div class="input">
-                    <label for="end-time">End Time:</label>
-                    <input type="time" name="end-time" id="end-time" required>
-                </div>
-            </div>
-            <div class="section">
-                <p class="section-title">Rooms:</p>
-                <div id="room-inputs"></div>
-            </div>
-            <div class="button-container section">
-                <button class="btn" type="submit">Submit</button>
-            </div>
+            <%- include('../partials/recurring-event-popup'); %>
+                <%- include('../partials/review-days'); %>
 
-            <p id="form-message"></p>
-        </form>
-    </div>
-    
-    <%- include('../partials/footer'); %>
+                    <div class="form-container">
+                        <form id="create-form">
+                            <div class="section">
+                                <div class="input">
+                                    <label for="primary-contact">Primary Contact</label>
+                                    <select id="primary-contact"></select>
+                                </div>
+                                <div class="input">
+                                    <label for="start-date">Event Date:</label>
+                                    <input type="date" name="start-date" id="start-date" required>
+                                </div>
+                                <div class="input">
+                                    <label for="start-time">Start Time:</label>
+                                    <input type="time" name="start-time" id="start-time" required>
+                                </div>
+                                <div class="input">
+                                    <label for="end-time">End Time:</label>
+                                    <input type="time" name="end-time" id="end-time" required>
+                                </div>
+                                <div class="input full-width">
+                                    <label for="recurring">Recurring Event:</label>
+                                    <button type="button" onclick="patternShow()" id="recurring-event-input">
+                                        <p id="recurring-label">One Time Event</p>
+                                        <i class='fas fa-ellipsis-h'></i>
+                                        <!-- <button type="button" onclick="patternShow()"></button> -->
+                                    </button>
+                                </div>
 
-    <script src="/scripts/create.js"></script>
+                            </div>
+
+                            <div class="section">
+                                <p class="section-title">Rooms:</p>
+                                <div id="room-inputs"></div>
+                            </div>
+                            <div class="button-container section">
+                                <button class="btn" type="submit">Submit</button>
+                            </div>
+
+                            <p id="form-message"></p>
+                        </form>
+                    </div>
+
+                    <%- include('../partials/footer'); %>
+
+                        <script src="/scripts/create.js"></script>
 </body>
+
 </html>
